@@ -11,32 +11,35 @@ import chess.ChessPosition;
 public class Program {
 
 	public static void main(String[] args) {
-		
+
 		Scanner scanner = new Scanner(System.in);
 		ChessMatch chessMatch = new ChessMatch();
-		
-		while(true) {
+
+		while (true) {
 			try {
 				UI.clearScreen();
 				UI.printBoard(chessMatch.getPieces());
 				System.out.println();
 				System.out.print("Source: ");
 				ChessPosition source = UI.readChessPosition(scanner);
-				
+
+				boolean[][] possibleMoves = chessMatch.possibleMoves(source);
+				UI.clearScreen();
+				UI.printBoard(chessMatch.getPieces(), possibleMoves);
 				System.out.println();
 				System.out.print("Target: ");
 				ChessPosition target = UI.readChessPosition(scanner);
-				
+
 				ChessPiece capturedPiece = chessMatch.perfomChassMove(source, target);
-			} catch(ChessException e) {
+			} catch (ChessException e) {
 				System.out.println(e.getMessage());
 				scanner.nextLine();
-			} catch(InputMismatchException e) {
+			} catch (InputMismatchException e) {
 				System.out.println(e.getMessage());
 				scanner.nextLine();
 			}
 		}
-	
+
 	}
 
 }
